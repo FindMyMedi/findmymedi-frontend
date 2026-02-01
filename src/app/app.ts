@@ -1,12 +1,19 @@
-import { Component, signal } from '@angular/core';
-import { HeaderComponent } from "./core/header/header.component";
+import { AuthService } from './services/auth.service';
+import { Component, OnInit, signal } from '@angular/core';
+import { HeaderComponent } from './core/header/header.component';
 
 @Component({
   selector: 'app-root',
   imports: [HeaderComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
-export class App {
+export class App implements OnInit{
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.refreshAuthState().subscribe();
+  }
+
   protected readonly title = signal('front-end');
 }
