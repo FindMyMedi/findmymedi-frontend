@@ -5,19 +5,23 @@
     </div>
 
     <div class="flex items-center gap-2">
-      <button
-        (click)="login()"
-        class="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 transition cursor-pointer"
-      >
-        Sign in
-      </button>
-
-      <button
-        (click)="register()"
-        class="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 transition cursor-pointer"
-      >
-        Register
-      </button>
+      <ng-container *ngIf="!isLoggedIn; else loggedInBtns">
+        <button
+          (click)="login()"
+          class="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 transition cursor-pointer"
+        >
+          Sign in
+        </button>
+      </ng-container>
+      
+      <ng-template #loggedInBtns>
+        <button
+          (click)="logout()"
+          class="px-4 py-2 text-sm font-medium text-red-600 border border-red-600 rounded-md hover:bg-red-50 transition cursor-pointer"
+        >
+          Logout
+        </button>
+      </ng-template>
     </div>
   </div>
 </nav>
