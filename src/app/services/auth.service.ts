@@ -25,9 +25,10 @@ export class AuthService {
   }
 
   logout() {
-    this.currentUserSubject.next(null);
-    window.location.assign(`${environment.backendBaseUrl}/auth/logout`);
-  }
+  this.currentUserSubject.next(null)
+   window.location.href = `${environment.backendBaseUrl}/auth/logout`;
+}
+
 
   currentUserApi(): Observable<CurrentUserResponse> {
     return this.http.get<CurrentUserResponse>(`${environment.backendBaseUrl}/auth/current-user`, {
