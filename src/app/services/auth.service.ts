@@ -8,27 +8,25 @@ import { CurrentUserResponse } from '../core/models/currentUser.model';
   providedIn: 'root',
 })
 export class AuthService {
-
   private currentUserSubject = new BehaviorSubject<CurrentUserResponse | null>(null);
 
   currentUser$ = this.currentUserSubject.asObservable();
 
   isLoggedIn$ = this.currentUser$.pipe(
     map((u) => !!u),
-    distinctUntilChanged()
+    distinctUntilChanged(),
   );
 
-  constructor(private http:HttpClient){}
+  constructor(private http: HttpClient) {}
 
   login() {
     window.location.assign(`${environment.backendBaseUrl}/oauth2/authorization/wso2`);
   }
 
   logout() {
-  this.currentUserSubject.next(null)
-   window.location.href = `${environment.backendBaseUrl}/auth/logout`;
-}
-
+    this.currentUserSubject.next(null);
+    window.location.replace(`${environment.backendBaseUrl}/auth/logout`);
+  }
 
   currentUserApi(): Observable<CurrentUserResponse> {
     return this.http.get<CurrentUserResponse>(`${environment.backendBaseUrl}/auth/current-user`, {
@@ -43,7 +41,7 @@ export class AuthService {
       catchError(() => {
         this.currentUserSubject.next(null);
         return of(false);
-      })
+      }),
     );
   }
 }
