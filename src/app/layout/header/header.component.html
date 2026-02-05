@@ -5,23 +5,24 @@
     </div>
 
     <div class="flex items-center gap-2">
-      <ng-container *ngIf="(isLoggedIn$ | async) === false; else loggedInBtns">
-        <button
-          (click)="login()"
-          class="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 transition cursor-pointer"
-        >
-          Sign in
-        </button>
+      <ng-container *ngIf="(authReady$ | async) === false">
+        <span class="text-sm text-gray-500">Loading...</span>
       </ng-container>
 
-      <ng-template #loggedInBtns>
-        <button
-          (click)="logout()"
-          class="px-4 py-2 text-sm font-medium text-red-600 border border-red-600 rounded-md hover:bg-red-50 transition cursor-pointer"
-        >
-          Logout
-        </button>
-      </ng-template>
+      <ng-container *ngIf="(authReady$ | async) === true">
+        <ng-container *ngIf="(isLoggedIn$ | async) === false; else loggedIn">
+          <button
+            (click)="login()"
+            class="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 transition cursor-pointer"
+          >
+            Sign in
+          </button>
+        </ng-container>
+
+        <ng-template #loggedIn>
+          <app-user-menu></app-user-menu>
+        </ng-template>
+      </ng-container>
     </div>
   </div>
 </nav>

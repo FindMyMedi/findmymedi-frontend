@@ -3,10 +3,12 @@ import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../../core/models/user.model';
+import { UserMenuComponent } from '../../shared/components/user-menu/user-menu.component';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule],
+  standalone:true,
+  imports: [CommonModule, UserMenuComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -25,7 +27,4 @@ export class HeaderComponent {
     this.auth.login();
   }
 
-  logout() {
-    this.auth.logout();
-  }
 }
